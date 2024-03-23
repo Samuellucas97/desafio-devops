@@ -33,4 +33,6 @@ Dia 23/Março (madrugada)
 
     - pasta ansible
 
+Acho que vou trabalhar só com a branch main, já que sou só eu. Do contrário, eu criaria a develop e bloquearia a main e develop para commit direto, apenas pull request com revisão obrigatória. Isso principalmente porque não há testes automatizados implementados
+
 (Vou dormir)
