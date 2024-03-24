@@ -60,9 +60,17 @@ Dia 23/Março (tarde)
 
 - Percebi que posso testar o script ansible no ambiente local. Basta que eu crie uma vm usando uma imagem base linux ubuntu que eu tenha instalado o python. Já o ambiente na cloud serve para testar o script de implantação contínua. E também o script terraform que sobe a vm na aws, o EC2 
 
--  Instalei os pacotes e executei a aplicação flask. Estou criando o dockerfile, vou criar usando dockerfile multi-stage.
+- Instalei os pacotes e executei a aplicação flask. Fiz algumas requisições de post e get.
+- Estou criando o dockerfile, vou criar usando dockerfile multi-stage.
 	- É uma solução mais segura e enxuta porque na versão final do container só haverá o código e biblitecas necessárias em runtime. Isso é importante para aqueles casos que fazem varios apt installs, por exemplo compilador c. Apesar do código atual não usar nada do tipo, acho que a longo prazo evitar que a build cresca anormalmente porque alguém precisou de algo.
 	- Também é possível economizar em execuções fazendo cache de passos intermediarios.
 	- aproveitei para colocar um dockerignore para impedir que sejam colocadas coisas que não se devem na imagem docker
 
-- Agora que eu lembrei, esqueci de criar um .gitignore.
+- Agora que eu lembrei, esqueci de criar um .gitignore. 
+- Finalizei o dockerfile, testei apenas o build, não a execução. Mas aproveitei para fazer um script make para facilitar o build (com tag). Agora basta digitar make que é executado o build
+
+Dia 24/Março (tarde)
+
+- No teste do container verifiquei que precisava corrigir certos pontos do dockerfile. Tinha esquecido de colocar o host sendo 0.0.0.0. Não consegui executar via multi-stage, ficava dando problema no gunicorn, como se ele não estive ok. Decidi prosseguir, depois vejo essa otimização. De qualquer modo, já estou usando imagem alpine para reduzir o tamanho. Porém deixei como backup.
+- Aproveitei para melhorar o makefile. Eu gosto muito do uso de script make porque para mim é mais fácil lembrar: make, make build, make clean.
+- Vou trabalhar agora na parte de kubernetes, mas não vou esquecer de publicar a minha imagem docker no Dockerhub. Antes disso, não me esqueci de atualizar a documentação do README da pasta `app`.
