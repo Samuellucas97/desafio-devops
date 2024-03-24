@@ -1,0 +1,13 @@
+# Mac OSX 
+.DS_Store
+
+# PyCharm
+.idea/
+
+.env
+
+# Python specific
+__pycache__/
+*.pyc
+
+.mypy_cache

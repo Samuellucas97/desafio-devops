@@ -59,3 +59,10 @@ Dia 23/Março (tarde)
 - Resolvi colocar o api gateway kong dentro do cluster também para aumentar a resiliencia e a escalabilidade
 
 - Percebi que posso testar o script ansible no ambiente local. Basta que eu crie uma vm usando uma imagem base linux ubuntu que eu tenha instalado o python. Já o ambiente na cloud serve para testar o script de implantação contínua. E também o script terraform que sobe a vm na aws, o EC2 
+
+-  Instalei os pacotes e executei a aplicação flask. Estou criando o dockerfile, vou criar usando dockerfile multi-stage.
+	- É uma solução mais segura e enxuta porque na versão final do container só haverá o código e biblitecas necessárias em runtime. Isso é importante para aqueles casos que fazem varios apt installs, por exemplo compilador c. Apesar do código atual não usar nada do tipo, acho que a longo prazo evitar que a build cresca anormalmente porque alguém precisou de algo.
+	- Também é possível economizar em execuções fazendo cache de passos intermediarios.
+	- aproveitei para colocar um dockerignore para impedir que sejam colocadas coisas que não se devem na imagem docker
+
+- Agora que eu lembrei, esqueci de criar um .gitignore.
