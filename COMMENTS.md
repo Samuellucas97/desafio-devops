@@ -74,3 +74,15 @@ Dia 24/Março (tarde)
 - No teste do container verifiquei que precisava corrigir certos pontos do dockerfile. Tinha esquecido de colocar o host sendo 0.0.0.0. Não consegui executar via multi-stage, ficava dando problema no gunicorn, como se ele não estive ok. Decidi prosseguir, depois vejo essa otimização. De qualquer modo, já estou usando imagem alpine para reduzir o tamanho. Porém deixei como backup.
 - Aproveitei para melhorar o makefile. Eu gosto muito do uso de script make porque para mim é mais fácil lembrar: make, make build, make clean.
 - Vou trabalhar agora na parte de kubernetes, mas não vou esquecer de publicar a minha imagem docker no Dockerhub. Antes disso, não me esqueci de atualizar a documentação do README da pasta `app`.
+
+Dia 25/Março
+
+[viagem p/ Recife]
+
+Dia 25/Março (noite)
+- Pronto, fiz o upload de 2 versões do docker: 1.0 e latest. Caso alguem queira trabalhar especificamente com uma versão pode usar a 1.0, do contrário, pode apenas usar a latest. 
+    - Aproveitei para fazer um script make publish para facilitar a release da imagem.
+- Vou agora para os testes com o kubernetes, terminei uma versão inicial, com apenas um pod mesmo que faz referencia a imagem que subi ao dockerhub
+    - Vou criar um cluster kubernetes microk8s dentro de uma vm, já que é mais simples, usando o snap.
+- para a virtual machine (vm) que instanciarei o cluster, vou usar o vagrant. Para mim é mais comodo, usar ele porque consigo criar e destruir a vm facilmente, bem como configurá-la.
+    - resolvi usar o ubuntu 20.04, uma versão lts que é amplamente conhecida. Mesmo tendo a 22.04 lts, prefiro versões mais antigas, mais estáveis e com uma boa comunidade ao redor. Crie uma vm com o mínimo do requisito permitido para rodar o microk8s, com uns 4megabytes e 2 cpus.
