@@ -11,7 +11,6 @@ Essa implantação segue dois formatos: em infraestrutura local e em infraestrut
 
 ![cloud infrastructure design](./assets/cloud-environment_version_1.png)
 
-
 ## Requisitos
 
 

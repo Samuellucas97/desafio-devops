@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: samuel1797/desafio-devops:
+        image: samuel1797/desafio-devops:1.0
         ports:
         - containerPort: 8000
 ---
@@ -23,7 +23,7 @@ kind: Service
 metadata:
   name: flask-app-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: flask-app
   ports:

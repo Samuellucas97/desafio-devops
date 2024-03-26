@@ -86,3 +86,12 @@ Dia 25/Março (noite)
     - Vou criar um cluster kubernetes microk8s dentro de uma vm, já que é mais simples, usando o snap.
 - para a virtual machine (vm) que instanciarei o cluster, vou usar o vagrant. Para mim é mais comodo, usar ele porque consigo criar e destruir a vm facilmente, bem como configurá-la.
     - resolvi usar o ubuntu 20.04, uma versão lts que é amplamente conhecida. Mesmo tendo a 22.04 lts, prefiro versões mais antigas, mais estáveis e com uma boa comunidade ao redor. Crie uma vm com o mínimo do requisito permitido para rodar o microk8s, com uns 4megabytes e 2 cpus.
+        - Aproveitei para colocar o .vagrant na lista de arquivos a serem ignorados. Estou adicionando os comandos de configuraçao da vm na parte de script, incluindo os do microk8s (documentação: https://microk8s.io/docs/getting-started). Não esqueci de testar primeiro na vm. 
+            - Sempre fazer incrementalmente
+        - Resolvi pegar uma versão estável do kubernetes. No site há a menção a 1.26, 1.27, 1.28. Como a 1.26 já perdeu o suporte, estarei usando a 1.27, a mais antiga com suporte que vai até Junho 2024-06-28. Mesma lógica poderia ser usada para a versão do ubuntu 20.04 que só termina o suporte em Abril/2025
+
+- terminar dei criar o cluster e testar a instanciação da aplicação no kubernetes. 
+    - Aproveitei para implementar um healt check simples na api flask para que o deployment esteja ok apenas quando o healthcheck responder. 
+        - Tive que fazer isso porque a aplicação demorar um pouco mais para subir e estava tendo que usar sleep para captura quando a aplicação estava ok para então fazer a requisição de teste no Vagrant.
+- Estou atualmente em dúvida entre qual passo seguir: pegar os comandos que uso no vagrant e passar para um ansible; fazer o continous release via Github Actions ou configurar monitoramento no cluster
+    -  

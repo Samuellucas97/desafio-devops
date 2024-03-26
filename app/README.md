@@ -7,7 +7,7 @@ Trata-se de uma aplicação Flask - API REST.  Através dela os internautas envi
 - Docker (_versão 25.0.4_)
 - GNU Make (_versão 4.3_) - Opcional! 
 
-## Como buildar executa?
+## Como executa a aplicação?
 
 ### Execução via Docker
 
@@ -90,7 +90,27 @@ b7b2b5177439   app:1.0   "gunicorn -b 0.0.0.0…"   1 second ago   Up Less than 
 A aplicação por meio do container `flask_ap` estará disponível em [http://localhost:8000](http://localhost:8000). Voce pode verificar se está tudo ok fazendo a seguinte requisição:
 
 ```bash
-$
+$ curl -sv localhost:8000/api/comment/list/1
+*   Trying 127.0.0.1:8000...
+* Connected to localhost (127.0.0.1) port 8000 (#0)
+> GET /api/comment/list/1 HTTP/1.1
+> Host: localhost:8000
+> User-Agent: curl/7.81.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 404 NOT FOUND
+< Server: gunicorn/20.0.4
+< Date: Tue, 26 Mar 2024 01:09:42 GMT
+< Connection: close
+< Content-Type: application/json
+< Content-Length: 68
+< 
+{
+  "message": "content_id 1 not found", 
+  "status": "NOT-FOUND"
+}
+* Closing connection 0
 ```
 
 Para limpeza do ambiente execute o comando abaixo:
@@ -118,6 +138,11 @@ REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 
 Existem outros comandos disponíveis no arquivo `Makefile`: `make buid`, `make run`, e `make publish`. Uma breve descrição segue abaixo:
 
+| Comando      | Descrição |
+|--------------|-------------|
+| `make build`   | Build da imagem Docker             |
+| `make run`     | Instanciação do container Docker            |
+| `make publish` | Publicação da imagem Docker no DockerHub            |
 
 ### Execução Local
 
