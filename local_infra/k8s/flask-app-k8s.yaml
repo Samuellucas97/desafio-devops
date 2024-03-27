@@ -17,6 +17,26 @@ spec:
         image: samuel1797/desafio-devops:1.0
         ports:
         - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 75
+          timeoutSeconds: 10
+          periodSeconds: 60
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 75
+          timeoutSeconds: 10
+          periodSeconds: 60
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          failureThreshold: 30
+          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service

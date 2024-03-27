@@ -43,19 +43,22 @@ Vagrant.configure("2") do |config|
     snap install microk8s --classic --channel=1.27    
     microk8s status --wait-ready
 
-
     mkdir -p ~/.kube
     usermod -a -G microk8s vagrant
     chown -f -R vagrant ~/.kube
 
-    microk8s kubectl apply -f /home/vagrant/k8s/flask-app-k8s.yaml
-    microk8s.kubectl wait --for=condition=available deployment/flask-app-deployment
-    sleep 20
-    microk8s kubectl get service -A
-    microk8s kubectl get deployment -A
-    export NODE_PORT="$(microk8s kubectl get services/flask-app-service -o go-template='{{(index .spec.ports 0).nodePort}}')"
+
+    microk8s kubectl create namespace app
+    microk8s kubectl apply -f /home/vagrant/k8s/flask-app-k8s.yaml --namespace app
+    microk8s.kubectl wait --for=condition=available deployment/flask-app-deployment --namespace app --timeout=300s
+    microk8s kubectl wait --for=condition=Ready pod -l app=flask-app -n app --timeout=300s
+    microk8s kubectl get service --namespace app
+    microk8s kubectl get deployment --namespace app
+
+    microk8s enable dashboard metrics-server observability
+    
+    export NODE_PORT="$(microk8s kubectl get services/flask-app-service --namespace app -o go-template='{{(index .spec.ports 0).nodePort}}')"
     echo "NODE_PORT=${NODE_PORT}"
     curl -sv localhost:${NODE_PORT}/api/comment/list/1
-    
   SHELL
 end

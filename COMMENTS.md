@@ -94,4 +94,13 @@ Dia 25/Março (noite)
     - Aproveitei para implementar um healt check simples na api flask para que o deployment esteja ok apenas quando o healthcheck responder. 
         - Tive que fazer isso porque a aplicação demorar um pouco mais para subir e estava tendo que usar sleep para captura quando a aplicação estava ok para então fazer a requisição de teste no Vagrant.
 - Estou atualmente em dúvida entre qual passo seguir: pegar os comandos que uso no vagrant e passar para um ansible; fazer o continous release via Github Actions ou configurar monitoramento no cluster
-    -  
+
+Dia 26/Março
+[Viagem de volta de Recife a Natal]
+
+Dia 26/Março (noite)
+- Adicionando as secrets no repositório, tinha esquecido de remover do makefile. Preciso regerar a tag do Dockehub
+    - Preciso testar se o pipeline de entrega/release contínua está funcionando.
+- Adicionei a parte de monitoramento ao cluster kubernetes no script vagrant
+    - Adicionei mais documentação a pasta do kubernetes
+    - Estou vendo para transportar a configuração para um script ansible
