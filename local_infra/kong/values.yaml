@@ -1,0 +1,6 @@
+# values.yaml
+kongProxy:
+  type: NodePort
+  service:
+    port: 8000
+    targetPort: 8000

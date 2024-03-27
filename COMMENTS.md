@@ -62,9 +62,9 @@ Dia 23/Março (tarde)
 
 - Instalei os pacotes e executei a aplicação flask. Fiz algumas requisições de post e get.
 - Estou criando o dockerfile, vou criar usando dockerfile multi-stage.
-	- É uma solução mais segura e enxuta porque na versão final do container só haverá o código e biblitecas necessárias em runtime. Isso é importante para aqueles casos que fazem varios apt installs, por exemplo compilador c. Apesar do código atual não usar nada do tipo, acho que a longo prazo evitar que a build cresca anormalmente porque alguém precisou de algo.
-	- Também é possível economizar em execuções fazendo cache de passos intermediarios.
-	- aproveitei para colocar um dockerignore para impedir que sejam colocadas coisas que não se devem na imagem docker
+  - É uma solução mais segura e enxuta porque na versão final do container só haverá o código e biblitecas necessárias em runtime. Isso é importante para aqueles casos que fazem varios apt installs, por exemplo compilador c. Apesar do código atual não usar nada do tipo, acho que a longo prazo evitar que a build cresca anormalmente porque alguém precisou de algo.
+    - Também é possível economizar em execuções fazendo cache de passos intermediarios.
+    - aproveitei para colocar um dockerignore para impedir que sejam colocadas coisas que não se devem na imagem docker
 
 - Agora que eu lembrei, esqueci de criar um .gitignore. 
 - Finalizei o dockerfile, testei apenas o build, não a execução. Mas aproveitei para fazer um script make para facilitar o build (com tag). Agora basta digitar make que é executado o build
@@ -80,19 +80,19 @@ Dia 25/Março
 [viagem p/ Recife]
 
 Dia 25/Março (noite)
-- Pronto, fiz o upload de 2 versões do docker: 1.0 e latest. Caso alguem queira trabalhar especificamente com uma versão pode usar a 1.0, do contrário, pode apenas usar a latest. 
-    - Aproveitei para fazer um script make publish para facilitar a release da imagem.
+- Pronto, fiz o upload de 2 versões do docker: 1.0 e latest. Caso alguem queira trabalhar especificamente com uma versão pode usar a 1.0, do contrário, pode apenas usar a latest.
+  - Aproveitei para fazer um script make publish para facilitar a release da imagem.
 - Vou agora para os testes com o kubernetes, terminei uma versão inicial, com apenas um pod mesmo que faz referencia a imagem que subi ao dockerhub
-    - Vou criar um cluster kubernetes microk8s dentro de uma vm, já que é mais simples, usando o snap.
+  - Vou criar um cluster kubernetes microk8s dentro de uma vm, já que é mais simples, usando o snap.
 - para a virtual machine (vm) que instanciarei o cluster, vou usar o vagrant. Para mim é mais comodo, usar ele porque consigo criar e destruir a vm facilmente, bem como configurá-la.
-    - resolvi usar o ubuntu 20.04, uma versão lts que é amplamente conhecida. Mesmo tendo a 22.04 lts, prefiro versões mais antigas, mais estáveis e com uma boa comunidade ao redor. Crie uma vm com o mínimo do requisito permitido para rodar o microk8s, com uns 4megabytes e 2 cpus.
-        - Aproveitei para colocar o .vagrant na lista de arquivos a serem ignorados. Estou adicionando os comandos de configuraçao da vm na parte de script, incluindo os do microk8s (documentação: https://microk8s.io/docs/getting-started). Não esqueci de testar primeiro na vm. 
-            - Sempre fazer incrementalmente
-        - Resolvi pegar uma versão estável do kubernetes. No site há a menção a 1.26, 1.27, 1.28. Como a 1.26 já perdeu o suporte, estarei usando a 1.27, a mais antiga com suporte que vai até Junho 2024-06-28. Mesma lógica poderia ser usada para a versão do ubuntu 20.04 que só termina o suporte em Abril/2025
+  - resolvi usar o ubuntu 20.04, uma versão lts que é amplamente conhecida. Mesmo tendo a 22.04 lts, prefiro versões mais antigas, mais estáveis e com uma boa comunidade ao redor. Crie uma vm com o mínimo do requisito permitido para rodar o microk8s, com uns 4megabytes e 2 cpus.
+    - Aproveitei para colocar o .vagrant na lista de arquivos a serem ignorados. Estou adicionando os comandos de configuraçao da vm na parte de script, incluindo os do microk8s (documentação: https://microk8s.io/docs/getting-started). Não esqueci de testar primeiro na vm.
+      - Sempre fazer incrementalmente
+      - Resolvi pegar uma versão estável do kubernetes. No site há a menção a 1.26, 1.27, 1.28. Como a 1.26 já perdeu o suporte, estarei usando a 1.27, a mais antiga com suporte que vai até Junho 2024-06-28. Mesma lógica poderia ser usada para a versão do ubuntu 20.04 que só termina o suporte em Abril/2025
 
 - terminar dei criar o cluster e testar a instanciação da aplicação no kubernetes. 
-    - Aproveitei para implementar um healt check simples na api flask para que o deployment esteja ok apenas quando o healthcheck responder. 
-        - Tive que fazer isso porque a aplicação demorar um pouco mais para subir e estava tendo que usar sleep para captura quando a aplicação estava ok para então fazer a requisição de teste no Vagrant.
+  - Aproveitei para implementar um healt check simples na api flask para que o deployment esteja ok apenas quando o healthcheck responder.
+    - Tive que fazer isso porque a aplicação demorar um pouco mais para subir e estava tendo que usar sleep para captura quando a aplicação estava ok para então fazer a requisição de teste no Vagrant.
 - Estou atualmente em dúvida entre qual passo seguir: pegar os comandos que uso no vagrant e passar para um ansible; fazer o continous release via Github Actions ou configurar monitoramento no cluster
 
 Dia 26/Março
@@ -100,7 +100,8 @@ Dia 26/Março
 
 Dia 26/Março (noite)
 - Adicionando as secrets no repositório, tinha esquecido de remover do makefile. Preciso regerar a tag do Dockehub
-    - Preciso testar se o pipeline de entrega/release contínua está funcionando.
+  - Preciso testar se o pipeline de entrega/release contínua está funcionando.
 - Adicionei a parte de monitoramento ao cluster kubernetes no script vagrant
-    - Adicionei mais documentação a pasta do kubernetes
-    - Estou vendo para transportar a configuração para um script ansible
+  - Adicionei mais documentação a pasta do kubernetes
+  - Estou vendo para transportar a configuração para um script ansible
+- Lembrei que faltava o api gateway, instalei o kong via helm. Falta agora configurar ele
