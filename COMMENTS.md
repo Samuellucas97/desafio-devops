@@ -105,3 +105,16 @@ Dia 26/Março (noite)
   - Adicionei mais documentação a pasta do kubernetes
   - Estou vendo para transportar a configuração para um script ansible
 - Lembrei que faltava o api gateway, instalei o kong via helm. Falta agora configurar ele
+
+Dia 27/Março (manhã)
+- Ajustes na deployment do app. Tinha esquecido de fazer com o pulling fosse apenas quando a imagem não estivesse presente. Logicamente, é necessário será diferente da latest
+- Andei estudando sobre como implementar kong api gateway no kubernetes. Minha experiencia anterior era utilizando docker compose
+  - verifiquei que ele é uma bem melhor que o uso de ingress já que dá para trabalhar sobre protocolocs como o gRPC e UDP e TCP que não estão necessiariamente na camada 7 de redes, aplicação. O UDP e TCP por exmeplo, são camada 4, transporte, e o gRPC nem é um padrão de fato para a camada 7 
+    - O API Gateway permite uma gama maior de aplicações como rate limiting, enquanto que o ingress foca em HTTP e HTTPS
+    - no caso do Kong é o KIC (Kong Ingress Controlle) que é uma combinação de Ingress + API Gateway + Load Balancer
+
+Dia 28/Março (tarde)
+- Continue o estudo, a documentação é meio escassa relacionada ao microk8s
+- Estava esquecendo de instalar o Metallb para obtenção de ip para permitr acesso externo a minha VM. 
+- Consegui fazer funcionar o mapeamento, porém usando o namespace default para deploy do app. Não gostei muito, mas focando em funcionalidade, é suficiente por enquanto.
+- Vou partir para colocar a configuração num ansible

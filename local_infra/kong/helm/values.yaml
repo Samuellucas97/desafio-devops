@@ -1,0 +1,15 @@
+# values.yaml
+kongProxy:
+  type: NodePort
+  service:
+    port: 8000
+    targetPort: 8000
+
+postgresql:
+  enabled: true
+  postgresqlUsername: kong
+  postgresqlPassword: kongpassword
+  postgresqlDatabase: kong
+  persistence:
+    enabled: true
+    size: 1Gi

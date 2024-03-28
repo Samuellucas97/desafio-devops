@@ -1,7 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-app-deployment
+  labels:
+    app: flask-app
+  name: flask-app
 spec:
   replicas: 1
   selector:
@@ -15,6 +17,7 @@ spec:
       containers:
       - name: flask-app
         image: samuel1797/desafio-devops:1.0
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
         readinessProbe:
@@ -41,12 +44,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-app-service
+  labels:
+    app: flask-app
+  name: flask-app
 spec:
-  type: NodePort
+  ports:
+  - protocol: TCP
+    name: http
+    port: 8000
+    targetPort: 8000
   selector:
     app: flask-app
-  ports:
-    - protocol: TCP
-      port: 8000
-      targetPort: 8000

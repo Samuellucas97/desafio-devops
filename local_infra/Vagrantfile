@@ -38,10 +38,13 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+    echo ""
+    echo "************** Updating Linux Packages"
     apt-get update
     apt-get upgrade -y
 
-    echo "Installing MicroK8s (version 1.27)"
+    echo ""
+    echo "************** Installing MicroK8s (version 1.27)"
     snap install microk8s --classic --channel=1.27    
     microk8s status --wait-ready
 
@@ -49,33 +52,41 @@ Vagrant.configure("2") do |config|
     usermod -a -G microk8s vagrant
     chown -f -R vagrant ~/.kube
 
-    echo "Deploying Flask App into the MicroK8s"
-    microk8s kubectl create namespace app
-    microk8s kubectl apply -f /home/vagrant/k8s/flask-app-k8s.yaml --namespace app
-    microk8s.kubectl wait --for=condition=available deployment/flask-app-deployment --namespace app --timeout=300s
-    microk8s kubectl wait --for=condition=Ready pod -l app=flask-app -n app --timeout=300s
-    microk8s kubectl get service --namespace app
-    microk8s kubectl get deployment --namespace app
+    alias kubectl='microk8s kubectl'
+    alias helm='microk8s helm'
+    # echo ""
+    # echo "************** Deploying Flask App into the MicroK8s"
+    # kubectl create namespace app
+    # kubectl apply -f /home/vagrant/k8s/flask-app-k8s.yaml --namespace app
+    # kubectl wait --for=condition=available deployment/flask-app-deployment --namespace app --timeout=300s
+    # kubectl wait --for=condition=Ready pod -l app=flask-app -n app --timeout=300s
+    # kubectl get service --namespace app
+    # kubectl get deployment --namespace app
 
-    echo "Installing MicroK8s addons/plugins"
-    microk8s enable dns 
-    microk8s enable storage
-    microk8s enable ingress
-    microk8s enable metrics-server
-    microk8s enable observability
-    microk8s enable dashboard
-    
-    microk8s helm repo add kong https://charts.konghq.com
-    microk8s helm repo update
-    microk8s helm install kong kong/kong --namespace kong-api-gateway --create-namespace -f /home/vagrant/kong/values.yaml
+    echo ""
+    echo "************** Installing MicroK8s addons/plugins"
+    microk8s enable dns storage rbac 
+    # microk8s enable metallb
+    # microk8s enable metrics-server observability dashboard
 
-    export NODE_PORT="$(microk8s kubectl get services/flask-app-service --namespace app -o go-template='{{(index .spec.ports 0).nodePort}}')"
-    echo "NODE_PORT=${NODE_PORT}"
-    curl -sv localhost:${NODE_PORT}/api/comment/list/1
+    # echo ""
+    # echo "************** Installing Kong Ingress Controller (KIC)"
+    # kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+    # kubectl apply -f /home/vagrant/kong/gateway-api-crd.yaml
+    # helm repo add kong https://charts.konghq.com
+    # helm repo update
+    # helm install kong kong/ingress -n kong --create-namespace 
+
+    # helm dependency build /home/vagrant/kong/helm 
+    # helm install kong /home/vagrant/kong/helm --namespace kong --create-namespace
+
+    # export NODE_PORT="$(microk8s kubectl get services/flask-app-service --namespace app -o go-template='{{(index .spec.ports 0).nodePort}}')"
+    # echo "NODE_PORT=${NODE_PORT}"
+    # curl -sv localhost:${NODE_PORT}/api/comment/list/1
     
-    microk8s kubectl --namespace kube-system patch svc kubernetes-dashboard -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32000, "port": 443, "protocol": "TCP", "targetPort": 8443}]}}'
-    microk8s kubectl --namespace observability patch svc kube-prom-stack-kube-prome-prometheus -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32001, "port": 9090, "protocol": "TCP", "targetPort": 9090}]}}'
-    microk8s kubectl --namespace observability patch svc kube-prom-stack-grafana -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32002, "port": 80, "protocol": "TCP", "targetPort": 3000}]}}'
+    # microk8s kubectl --namespace kube-system patch svc kubernetes-dashboard -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32000, "port": 443, "protocol": "TCP", "targetPort": 8443}]}}'
+    # microk8s kubectl --namespace observability patch svc kube-prom-stack-kube-prome-prometheus -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32001, "port": 9090, "protocol": "TCP", "targetPort": 9090}]}}'
+    # microk8s kubectl --namespace observability patch svc kube-prom-stack-grafana -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32002, "port": 80, "protocol": "TCP", "targetPort": 3000}]}}'
 
 
   SHELL
