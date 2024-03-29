@@ -2,7 +2,7 @@
 
 Este diretório possui `Linux Ubuntu 20.04 LTS`, onde configura um `MicroK8s`. A imagem abaixo mostra a arquitetura proposta, onde é instalado o Kong e a aplicação Flask de exemplo.
 
-![cloud infrastructure design](../assets/local-environment_version_3.png)
+![Loca infrastructure design](../assets/local-environment_version_3.png)
 
 
 ## Requisitos
@@ -11,8 +11,58 @@ Este diretório possui `Linux Ubuntu 20.04 LTS`, onde configura um `MicroK8s`. A
   - Como instalar? Execute `sudo apt install vagrant`
 - VirtualBox (_versão 6.1.50\_Ubuntu r16103_)
   - Como instalar? Execute `sudo apt-get install virtualbox-6.1`
+- Ansible
+  - Como instalar? Execute `sudo apt-get install ansible`
+
+Execute o script abaixo para instalar todos os requisitos:
+
+```bash
+$ make requirements 
+
+******************** INSTALLING SOFTWARE REQUIREMENTS **********************************
+if [ -x /usr/bin/apt-get ]; then  xargs -a requirements.txt sudo apt-get install -y; fi
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+ansible is already the newest version (2.10.7+merged+base+2.10.8+dfsg-1).
+vagrant is already the newest version (2.2.19+dfsg-1ubuntu1).
+virtualbox is already the newest version (6.1.50-dfsg-1~ubuntu1.22.04.1).
+The following packages were automatically installed and are no longer required:
+  chromium-codecs-ffmpeg-extra gstreamer1.0-vaapi guile-2.2-libs libflashrom1 libftdi1-2 libgc1
+  libgnome-games-support-1-3 libgnome-games-support-common libgstreamer-plugins-bad1.0-0 libllvm13
+  libminizip1 libqqwing2v5 libva-wayland2
+Use 'sudo apt autoremove' to remove them.
+0 to upgrade, 0 to newly install, 0 to remove and 59 not to upgrade.
+
+```
 
 ## Instalando e usando a VM
+
+Para criação da VM e obtenção de acesso, use o comando abaixo: 
+
+Para destruir a VM, basta executar o comando abaixo:
+
+```bash
+$ make clean
+
+******************** DESTROYING THE VIRTUAL MACHINE **********************************
+vagrant destroy -f
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+
+vagrant status
+Current machine states:
+
+default                   not created (virtualbox)
+
+The environment has not yet been created. Run `vagrant up` to
+create the environment. If a machine is not created, only the
+default provider will be shown. So if a provider is not listed,
+then the machine is not created for that environment.
+
+```
+
+## Usando comandos Vagrant
 
 Para subir a VM, use o seguinte comando:
 

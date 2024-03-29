@@ -118,3 +118,18 @@ Dia 28/Março (tarde)
 - Estava esquecendo de instalar o Metallb para obtenção de ip para permitr acesso externo a minha VM. 
 - Consegui fazer funcionar o mapeamento, porém usando o namespace default para deploy do app. Não gostei muito, mas focando em funcionalidade, é suficiente por enquanto.
 - Vou partir para colocar a configuração num ansible
+
+Dia 28/Março (noite)
+
+- Finalizei um script inicial do ansible, apenas atualizando os pacotes e instalando o microk8s
+
+Dia 29/Março (manhã/tarde)
+- Finalizei a integração do ansible com o vagrant
+  - salvei a versão anterior que usava comandos shell do vagrant como backup
+  - preciso agora aperfeiçoar os script ansible para terminar de configurar o microk8s e instalar o kong 
+- Fiz um incrementos, adicionando um script make requirements. Ele ler do arquivo requirements.txt e instala via apt o ansible, virtualbox e vagrant
+- estou para iniciar a escrita dos scripts terraform
+  - vou criar um workflow do terraform só para isso. Não esquecer de deixar ele como ativação manual, não quero que sempre faça as coisas na aws para não ter que ficar pagando quando não preciso
+  - Na verdade, estou deixando por ultimo e usando vagrant justamente para economizar.
+- Exercitei pouco a parte de monitoramento. Minha ideia é instalar o pacote observability e importar uma dashboard no grafana
+

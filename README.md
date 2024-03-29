@@ -1,20 +1,41 @@
 # Desafio DevOps
 
-Este projeto tem como intuito a implantação automatizada de uma aplicação Flask: API de comentários. 
-Essa implantação segue dois formatos: em infraestrutura local e em infraestrutura na nuvem.
+Este projeto tem como intuito a implantação automatizada de uma aplicação Flask: API de comentários. Com isso serão praticados os seguintes conhecimentos:
 
-### Infraestrutura Local
+
+* Automação da infra, provisionamento dos hosts (IaaS)
+
+* Automação de setup e configuração dos hosts (IaC)
+
+* Pipeline de deploy automatizado
+
+* Monitoramento dos serviços e métricas da aplicação
+
+Nesse contexto, a implantação segue dois formatos: em infraestrutura local e em infraestrutura na nuvem. A infraestrutura local foi desenvolvida com o intuito de efetuar todas a etapas de testes localmente, economizando uso de serviços na clouds.
+
+### Conteúdo
+- [Infraestrutura Local](#infraestrutura-local)
+- [Infraestrutura na Nuvem](#infraestrutura-na-nuvem)
+- [GitHub Actions - CI/CD](#github-actions---cicd)
+
+## Infraestrutura Local
+
+A infraestrutura local é composta por uma máquina virtual (Virtual Machine - VM) usando o Vagrant e VirtualBox. Essa VM é configurada via Ansible, sendo instalado um cluster MicroK8s. A imagem abaixo mostra a topologia proposta, onde é instalado o Kong e a aplicação Flask de exemplo no cluster MicroK8s.
 
 ![local infrastructure design](./assets/local-environment_version_3.png)
 
-### Infraestrutura na Nuvem
+Visite a pasta [local_infra](./local_infra/) para saber mais sobre a instalação e execução.
+
+## Infraestrutura na Nuvem
+
+TODO
 
 ![cloud infrastructure design](./assets/cloud-environment_version_1.png)
 
-## Requisitos
+Visite a pasta [cloud_infra](./cloud_infra/) para saber mais sobre a instalação e execução.
 
-TODO
+## GitHub Actions - CI/CD
 
-## Como executar?
+Na pasta [.github/workflows](./.github/workflows) encontram os pipelines atualmente implementados
 
-TODO
+- [.github/workflows/cd_app.yaml](./.github/workflows/cd_app.yaml): Realiza criação da imagem Docker e publicação no DockerHub

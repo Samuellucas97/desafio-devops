@@ -2,7 +2,11 @@ all: run
 .PHONY: all build run clean
 
 requirements:
+	@echo
+	@echo "******************** INSTALLING SOFTWARE REQUIREMENTS **********************************"
 	if [ -x /usr/bin/apt-get ]; then  xargs -a requirements.txt sudo apt-get install -y; fi
+	@echo
+	@echo
 	
 build: clean
 	@echo
