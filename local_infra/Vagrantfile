@@ -28,71 +28,21 @@ Vagrant.configure("2") do |config|
   # your network.
   # config.vm.network "public_network"
 
-
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
     vb.memory = "4096"
     vb.cpus = "2"
   end
-  
+
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    echo ""
-    echo "************** Running Ansible script"
-    ansible-playbook -i /home/vagrant/ansible/inventory/localhost/hosts.yaml  /home/vagrant/ansible/playbooks/main.yaml
-
-    echo ""
-    echo "************** Updating Linux Packages"
-    apt-get update
-    apt-get upgrade -y
-
-    echo ""
-    echo "************** Installing MicroK8s (version 1.27)"
-    snap install microk8s --classic --channel=1.27    
-    microk8s status --wait-ready
-
-    mkdir -p ~/.kube
-    usermod -a -G microk8s vagrant
-    chown -f -R vagrant ~/.kube
-
-    alias kubectl='microk8s kubectl'
-    alias helm='microk8s helm'
-    # echo ""
-    # echo "************** Deploying Flask App into the MicroK8s"
-    # kubectl create namespace app
-    # kubectl apply -f /home/vagrant/k8s/flask-app-k8s.yaml --namespace app
-    # kubectl wait --for=condition=available deployment/flask-app-deployment --namespace app --timeout=300s
-    # kubectl wait --for=condition=Ready pod -l app=flask-app -n app --timeout=300s
-    # kubectl get service --namespace app
-    # kubectl get deployment --namespace app
-
-    echo ""
-    echo "************** Installing MicroK8s addons/plugins"
-    microk8s enable dns storage rbac 
-    # microk8s enable metallb
-    # microk8s enable metrics-server observability dashboard
-
-    # echo ""
-    # echo "************** Installing Kong Ingress Controller (KIC)"
-    # kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
-    # kubectl apply -f /home/vagrant/kong/gateway-api-crd.yaml
-    # helm repo add kong https://charts.konghq.com
-    # helm repo update
-    # helm install kong kong/ingress -n kong --create-namespace 
-
-    # helm dependency build /home/vagrant/kong/helm 
-    # helm install kong /home/vagrant/kong/helm --namespace kong --create-namespace
-
-    # export NODE_PORT="$(microk8s kubectl get services/flask-app-service --namespace app -o go-template='{{(index .spec.ports 0).nodePort}}')"
-    # echo "NODE_PORT=${NODE_PORT}"
-    # curl -sv localhost:${NODE_PORT}/api/comment/list/1
-    
-    # microk8s kubectl --namespace kube-system patch svc kubernetes-dashboard -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32000, "port": 443, "protocol": "TCP", "targetPort": 8443}]}}'
-    # microk8s kubectl --namespace observability patch svc kube-prom-stack-kube-prome-prometheus -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32001, "port": 9090, "protocol": "TCP", "targetPort": 9090}]}}'
-    # microk8s kubectl --namespace observability patch svc kube-prom-stack-grafana -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32002, "port": 80, "protocol": "TCP", "targetPort": 3000}]}}'
-
-
-  SHELL
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "ansible/playbooks/setup.yaml"
+    ansible.inventory_path = "ansible/inventory/localhost/hosts.yaml"
+    ansible.verbose = "v"
+    # ansible.user = "vagrant"
+    # ansible.private_key_path = "/path/to/your/private/key"
+    # ansible.ssh_extra_args = "-o ForwardAgent=yes"
+  end
 end

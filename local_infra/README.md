@@ -1,6 +1,9 @@
 # Ambiente local
 
-Este diretório possui `Linux Ubuntu 20.04 LTS`, onde configura um `MicroK8s`.
+Este diretório possui `Linux Ubuntu 20.04 LTS`, onde configura um `MicroK8s`. A imagem abaixo mostra a arquitetura proposta, onde é instalado o Kong e a aplicação Flask de exemplo.
+
+![cloud infrastructure design](../assets/local-environment_version_3.png)
+
 
 ## Requisitos
 
