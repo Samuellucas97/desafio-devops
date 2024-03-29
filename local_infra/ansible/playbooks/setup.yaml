@@ -1,0 +1,18 @@
+- hosts: localhost
+  vars:
+    - microk8s_version: 1.27
+  
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+      become: true
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: safe
+      become: true
+
+    - name: Install MicroK8s
+      command: snap install microk8s --classic --channel={{microk8s_version}}
+      become: true

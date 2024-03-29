@@ -13,7 +13,6 @@ Essa implantação segue dois formatos: em infraestrutura local e em infraestrut
 
 ## Requisitos
 
-
 TODO
 
 ## Como executar?

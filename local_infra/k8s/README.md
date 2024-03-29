@@ -1,6 +1,6 @@
 # Arquivos Kubernetes
 
-Este diretórios contém o arquivo Kubernetes relacionado a configuração da aplicação Flas 
+Este diretórios contém o arquivo Kubernetes relacionado a configuração da aplicação Flask. 
 
 ## Como instalar dentro de um cluster Kubernetes?
 
