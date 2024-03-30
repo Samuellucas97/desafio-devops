@@ -73,11 +73,38 @@
         line: 'alias {{ item.alias }}="{{ item.command }}"'
         create: yes
       become: true
-      with_items: "{{ bash_aliases }}"
-
+      with_items: "{{ bash_aliases }}"        
+    
     - name: Enable add-ons
       command: microk8s enable dns storage rbac 
       
     - name: Instal Metallb
       command: microk8s enable metallb:{{ metallb_ip_range }}
       become: true
+  
+    - name: Install Kong Ingress Controller (KIC)
+      block:
+        - name: Install Kubernetes Gateway API 
+          command: microk8s.kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+
+        - name: Install Kubernetes Gateway CRD
+          command: microk8s.kubectl apply -f /home/vagrant/kong/gateway-api-crd.yaml
+            
+        - name: Add Kong helm repo
+          command: microk8s.helm repo add kong https://charts.konghq.com
+        
+        - name: Update Helm repo
+          command: microk8s.helm repo update
+
+        - name: Check if the Kong namespace exists
+          command: microk8s.kubectl get namespace kong
+          ignore_errors: true
+          register: namespace_kong_output
+
+        - name: Install KIC Helm
+          command: microk8s.helm install kong kong/ingress -n kong --create-namespace
+          when: namespace_kong_output.rc != 0
+
+      become: true
+
+            

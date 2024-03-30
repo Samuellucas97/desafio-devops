@@ -39,21 +39,69 @@ Execute o seguinte comando:
 ```bash
 $ ansible-playbook  -i ./inventory/localhost/hosts.yaml ./playbooks/main.yaml 
 
-PLAY [localhost] ***********************************************************************************
+PLAY [localhost] ***************************************************************
 
-TASK [Gathering Facts] *****************************************************************************
+TASK [Gathering Facts] *********************************************************
 ok: [localhost]
 
-TASK [Update package cache] ************************************************************************
+TASK [Update package cache] ****************************************************
 changed: [localhost]
 
-TASK [Upgrade all packages] ************************************************************************
+TASK [Upgrade all packages] ****************************************************
 ok: [localhost]
 
-TASK [Install MicroK8s] ****************************************************************************
+TASK [Install prerequisites for MicroK8s] **************************************
+ok: [localhost] => (item=curl)
+ok: [localhost] => (item=iptables)
+ok: [localhost] => (item=snapd)
+
+TASK [Install MicroK8s] ********************************************************
 changed: [localhost]
 
-PLAY RECAP *****************************************************************************************
-localhost                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+TASK [Check MicroK8s status] ***************************************************
+changed: [localhost]
+
+TASK [Create .kube directory] **************************************************
+ok: [localhost]
+
+TASK [Checking if the group exists] ********************************************
+ok: [localhost]
+
+TASK [Add Ansible user to microk8s group] **************************************
+ok: [localhost]
+
+TASK [Change ownership to Ansible user (and group)] ****************************
+ok: [localhost]
+
+TASK [Add kubectl and helm aliases] ********************************************
+ok: [localhost] => (item={'alias': 'kubectl', 'command': 'microk8s kubectl'})
+ok: [localhost] => (item={'alias': 'helm', 'command': 'microk8s helm'})
+
+TASK [Enable add-ons] **********************************************************
+changed: [localhost]
+
+TASK [Instal Metallb] **********************************************************
+changed: [localhost]
+
+TASK [Install Kubernetes Gateway API] ******************************************
+changed: [localhost]
+
+TASK [Install Kubernetes Gateway CRD] ******************************************
+changed: [localhost]
+
+TASK [Add Kong helm repo] ******************************************************
+changed: [localhost]
+
+TASK [Update Helm repo] ********************************************************
+changed: [localhost]
+
+TASK [Check if the Kong namespace exists] **************************************
+changed: [localhost]
+
+TASK [Install KIC Helm] ********************************************************
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=18   changed=10   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 ```
