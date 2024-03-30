@@ -1,7 +1,14 @@
 - hosts: localhost
   vars:
+    - ansible_user_name: vagrant
+    - ansible_user_group_name: vagrant
     - microk8s_version: 1.27
-  
+    - bash_aliases:
+      - { alias: "kubectl", command: "microk8s kubectl" }
+      - { alias: 'helm', command: 'microk8s helm' }
+    - metallb_ip_range: 192.168.56.12-192.168.56.20
+
+
   tasks:
     - name: Update package cache
       apt:
@@ -13,6 +20,64 @@
         upgrade: safe
       become: true
 
+    - name: Install prerequisites for MicroK8s
+      apt:
+        name: "{{ item }}"
+        state: present
+      become: true
+      loop:
+        - curl
+        - iptables
+        - snapd
+
     - name: Install MicroK8s
       command: snap install microk8s --classic --channel={{microk8s_version}}
+      become: true
+    
+    - name: Check MicroK8s status
+      command: microk8s status --wait-ready
+      become: true
+
+    - name: Create .kube directory
+      file:
+        path: "{{ ansible_env.HOME }}/.kube"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      become: true
+
+    - name: Checking if the group exists
+      group: 
+        name: "{{ ansible_user_group_name }}"
+        state: present 
+      become: true
+
+    - name: Add Ansible user to microk8s group
+      user:
+        name: "{{ ansible_user_name }}"
+        groups: microk8s
+        append: true
+      become: true
+    
+    - name: Change ownership to Ansible user (and group)
+      file:
+        path: "{{ ansible_env.HOME }}/.kube"
+        state: directory
+        owner: "{{ ansible_user_name }}"
+        group: "{{ ansible_user_group_name }}"
+      become: true
+  
+    - name: Add kubectl and helm aliases
+      lineinfile:
+        dest: "{{ ansible_env.HOME }}/.bash_aliases"
+        line: 'alias {{ item.alias }}="{{ item.command }}"'
+        create: yes
+      become: true
+      with_items: "{{ bash_aliases }}"
+
+    - name: Enable add-ons
+      command: microk8s enable dns storage rbac 
+      
+    - name: Instal Metallb
+      command: microk8s enable metallb:{{ metallb_ip_range }}
       become: true

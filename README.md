@@ -2,7 +2,6 @@
 
 Este projeto tem como intuito a implantação automatizada de uma aplicação Flask: API de comentários. Com isso serão praticados os seguintes conhecimentos:
 
-
 * Automação da infra, provisionamento dos hosts (IaaS)
 
 * Automação de setup e configuração dos hosts (IaC)
@@ -11,7 +10,7 @@ Este projeto tem como intuito a implantação automatizada de uma aplicação Fl
 
 * Monitoramento dos serviços e métricas da aplicação
 
-Nesse contexto, a implantação segue dois formatos: em infraestrutura local e em infraestrutura na nuvem. A infraestrutura local foi desenvolvida com o intuito de efetuar todas a etapas de testes localmente, economizando uso de serviços na clouds.
+A implantação segue dois formatos: em infraestrutura local e em infraestrutura na nuvem. A infraestrutura local foi desenvolvida com o intuito de efetuar todas a etapas de testes localmente, economizando uso de serviços na clouds.
 
 ### Conteúdo
 - [Infraestrutura Local](#infraestrutura-local)

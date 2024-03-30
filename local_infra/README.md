@@ -40,6 +40,140 @@ Use 'sudo apt autoremove' to remove them.
 
 Para criação da VM e obtenção de acesso, use o comando abaixo: 
 
+```bash
+$ make
+
+******************** DESTROYING THE VIRTUAL MACHINE **********************************
+vagrant destroy -f
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+
+vagrant status
+Current machine states:
+
+default                   not created (virtualbox)
+
+The environment has not yet been created. Run `vagrant up` to
+create the environment. If a machine is not created, only the
+default provider will be shown. So if a provider is not listed,
+then the machine is not created for that environment.
+
+
+******************** BUILDING THE VIRTUAL MACHINE **********************************
+vagrant provision
+==> default: VM not created. Moving on...
+
+vagrant status
+Current machine states:
+
+default                   not created (virtualbox)
+
+The environment has not yet been created. Run `vagrant up` to
+create the environment. If a machine is not created, only the
+default provider will be shown. So if a provider is not listed,
+then the machine is not created for that environment.
+
+
+******************** RUNNING THE VIRTUAL MACHINE **********************************
+vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'ubuntu/focal64'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'ubuntu/focal64' version '20240306.0.0' is up to date...
+==> default: Setting the name of the VM: local_infra_default_1711728740564_58789
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+    default: Adapter 2: hostonly
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection reset. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: 
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default: 
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if it's present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+==> default: Configuring and enabling network interfaces...
+==> default: Mounting shared folders...
+    default: /vagrant => /home/samuel/Music/desafio-devops/local_infra
+==> default: Running provisioner: file...
+    default: ./k8s => /home/vagrant/k8s
+==> default: Running provisioner: file...
+    default: ./kong => /home/vagrant/kong
+==> default: Running provisioner: file...
+    default: ./ansible => /home/vagrant/ansible
+==> default: Running provisioner: ansible...
+    default: Running ansible-playbook...
+
+PLAY [localhost] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Update package cache] ****************************************************
+changed: [localhost]
+
+TASK [Upgrade all packages] ****************************************************
+changed: [localhost]
+
+TASK [Install MicroK8s] ********************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=4    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+vagrant status
+Current machine states:
+
+default                   running (virtualbox)
+
+The VM is running. To stop this VM, you can run `vagrant halt` to
+shut it down forcefully, or you can run `vagrant suspend` to simply
+suspend the virtual machine. In either case, to restart it again,
+simply run `vagrant up`.
+
+vagrant ssh
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-173-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+  System information as of Fri Mar 29 16:16:10 UTC 2024
+
+  System load:  1.12              Processes:               158
+  Usage of /:   5.2% of 38.70GB   Users logged in:         0
+  Memory usage: 10%               IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%                IPv4 address for enp0s8: 192.168.56.10
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '22.04.3 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+*** System restart required ***
+Last login: Fri Mar 29 16:14:38 2024 from 192.168.56.1
+```
+
 Para destruir a VM, basta executar o comando abaixo:
 
 ```bash

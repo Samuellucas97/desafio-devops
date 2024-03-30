@@ -133,3 +133,5 @@ Dia 29/Março (manhã/tarde)
   - Na verdade, estou deixando por ultimo e usando vagrant justamente para economizar.
 - Exercitei pouco a parte de monitoramento. Minha ideia é instalar o pacote observability e importar uma dashboard no grafana
 
+Dia 29 (noite)
+Finalização da conversão do script shell para script ansible.
