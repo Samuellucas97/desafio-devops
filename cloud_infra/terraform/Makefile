@@ -1,8 +1,9 @@
+include .env
+
 all: preparation
 .PHONY: all preparation run
-
 	
-preparation: clean
+preparation: 
 	@echo
 	@echo "******************** PREPARING TERRAFORM ENVIRONMENT **********************************"
 	terraform init
@@ -16,7 +17,7 @@ preparation: clean
 run: preparation	 
 	@echo
 	@echo "******************** APPLYING THE CLOUD INFRAESTRUCTURE PLAN **********************************"
-	terraform apply
+	terraform apply "tfplan"
 	@echo
 
 

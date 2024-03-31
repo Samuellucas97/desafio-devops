@@ -36,5 +36,5 @@ variable "instance_type" {
 
 variable "key_pair_name" {
     default = "desafio_devops_key_pair"
-    description = "value"
+    description = "Public SSH to be put inside EC2"
 }

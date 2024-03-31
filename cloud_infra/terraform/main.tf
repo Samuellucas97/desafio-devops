@@ -5,6 +5,11 @@ terraform {
         version = "~> 5.0"
       }
     }
+    backend "s3" {
+      bucket = "desafiodevopsterraforms3backendbucket"
+      key = "terraform.tfstate"
+      dynamodb_table = "desafio-devops-terraform-lock"
+    }
 
     required_version = ">= 1.7.5"
 }

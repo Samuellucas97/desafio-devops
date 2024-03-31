@@ -154,4 +154,5 @@ Dia 31/Março
   - Finalizei de fazer atualização nos workflows do Github actions o script 
     - atualizei o Github actions script do CD do app, para que o pipeline seja executado apenas quando houver mudança na pasta `app`
     - Criei um script para a criação da infra
-  - 
+  - Esqueci de criar um local para armazenar o state do terraform. Vou usar o s3 para salvar o estado e o dinamodb para salva as mudanças
+    - precisei também mudar as permissões do meu grupo (IAM), para permitir gerenciamento do s3 e dynamodb
