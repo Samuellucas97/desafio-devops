@@ -1,4 +1,4 @@
-name: Continuous delivery and deploy into [NOT DEFINED] Cloud provider
+name: Continuous delivery and deploy into AWS Cloud provider
 
 #  Será executada as atividade abaixo sempre que foi submetido um push ou pull request a branch master
 # ou de forma manual

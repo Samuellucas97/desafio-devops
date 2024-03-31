@@ -27,7 +27,17 @@ Visite a pasta [local_infra](./local_infra/) para saber mais sobre a instalaçã
 
 ## Infraestrutura na Nuvem
 
-TODO
+A infraestrutura na AWS é composta por uma:
+
+* Virtual Private Cloud (**VPC**)
+* Subnet
+* Route Table
+* Internet Gateway
+* Security Group
+* Elastic Compute Cloud (**EC2**)
+
+
+O provisionamento é feito de forma automatizado via script Terraform.
 
 ![cloud infrastructure design](./assets/cloud-environment_version_2.png)
 
@@ -37,4 +47,6 @@ Visite a pasta [cloud_infra](./cloud_infra/) para saber mais sobre a instalaçã
 
 Na pasta [.github/workflows](./.github/workflows) encontram os pipelines atualmente implementados
 
-- [.github/workflows/cd_app.yaml](./.github/workflows/cd_app.yaml): Realiza criação da imagem Docker e publicação no DockerHub
+* [.github/workflows/cd_app.yaml](./.github/workflows/cd_app.yaml): Realiza criação da imagem Docker e publicação no DockerHub
+
+* [.github/workflows/iac.yaml](./.github/workflows/iac.yaml): Realiza o provisionamento da infraestrutura na AWS. Para evitar gasto, a execução do script é manual
