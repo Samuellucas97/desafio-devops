@@ -9,7 +9,7 @@ preparation: clean
 	@echo
 	@echo
 	@echo "******************** REVISING THE CLOUD INFRAESTRUCTURE PLAN **********************************"
-	terraform plan
+	terraform plan -out=tfplan
 	@echo
 
 
@@ -23,7 +23,7 @@ run: preparation
 clean:
 	@echo
 	@echo "******************** DESTROYING CLOUD INFRAESTRUCTURE **********************************"
-	terraform destroy 
+	terraform destroy -auto-approve
 	@echo
 	
 

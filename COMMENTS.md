@@ -151,4 +151,7 @@ Dia 30 (tarde)
     - e pensar em monitoramento
 
 Dia 31/Março
-  - Finalizei o script 
+  - Finalizei de fazer atualização nos workflows do Github actions o script 
+    - atualizei o Github actions script do CD do app, para que o pipeline seja executado apenas quando houver mudança na pasta `app`
+    - Criei um script para a criação da infra
+  - 

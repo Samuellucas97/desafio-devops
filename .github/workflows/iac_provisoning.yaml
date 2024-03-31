@@ -1,4 +1,4 @@
-name: Automated Provisioning into AWS
+name: Manual Provisioning into AWS
 
 #  Será executada as atividade abaixo de forma manual
 on:
@@ -42,3 +42,6 @@ jobs:
 
     - name: Generate Terraform execution plan
       run: terraform plan -out=tfplan
+
+    - name: Create infraestructure on AWS
+      run: terraform apply "tfplan"
