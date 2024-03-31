@@ -55,7 +55,7 @@ Na pasta [.github/workflows](./.github/workflows) encontram os pipelines atualme
 
 * [.github/workflows/cd_app.yaml](./.github/workflows/cd_app.yaml): Realiza criação da imagem Docker e publicação no DockerHub
 
-* [.github/workflows/iac_provisoning.yaml](./.github/workflows/iac_provisoning.yaml): Realiza o provisionamento da infraestrutura na AWS. Para evitar gasto, a execução do script é manual
+* [.github/workflows/iac_provisioning.yaml](./.github/workflows/iac_provisioning.yaml): Realiza o provisionamento da infraestrutura na AWS. Para evitar gasto, a execução do script é manual
 
 
 * [.github/workflows/iac_deprovisioning.yaml](./.github/workflows/iac_deprovisioning.yaml): Realiza o deprovisionamento/remoção da infraestrutura na AWS. A execução do script é manual
