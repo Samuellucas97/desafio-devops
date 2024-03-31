@@ -149,3 +149,6 @@ Dia 30 (tarde)
     - Preciso colocar o terraform num workflow do github actions
     - preciso também fazer rodar o terraform com o ansible, para que seja instalado.
     - e pensar em monitoramento
+
+Dia 31/Março
+  - Finalizei o script 

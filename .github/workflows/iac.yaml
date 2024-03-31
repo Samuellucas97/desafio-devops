@@ -8,6 +8,10 @@ jobs:
   provisioning:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: cloud_infra/terraform
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
