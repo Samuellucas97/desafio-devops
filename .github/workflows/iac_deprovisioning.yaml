@@ -33,6 +33,9 @@ jobs:
     - uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: "1.7.5"
-   
+
+    - name: Terraform initialization (e.g., download provider plugins)
+      run: terraform init
+    
     - name: Remove infraestructure on AWS
       run: terraform destroy -auto-approve

@@ -45,3 +45,6 @@ jobs:
 
     - name: Create infraestructure on AWS
       run: terraform apply "tfplan"
+
+    - name: Show Terraform outputs (e.g., public ip)
+      run: terraform output
