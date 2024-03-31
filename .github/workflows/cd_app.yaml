@@ -5,13 +5,12 @@ name: Continuous delivery and deploy into AWS Cloud provider
 on:
   push:
     branches: [main, develop]
-    # paths:
-    # - "app/**"
+    paths:
+    - "app/**"
   pull_request:
     branches: [main, develop]
-    # paths:
-    # - "app/**"
-  # workflow_dispatch:
+    paths:
+    - "app/**"
 
 jobs:
   continuous-delivery:
