@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-test:
+  provisioning:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,3 +15,12 @@ jobs:
     - uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: "1.7.5"
+
+    - name: Terraform initialization (e.g., download provider plugins)
+      run: terraform init
+    
+    - name: Validation of Terraform script
+      run: terraform validate
+
+    - name: Generate Terraform execution plan
+      run: terraform plan -out=tfplan

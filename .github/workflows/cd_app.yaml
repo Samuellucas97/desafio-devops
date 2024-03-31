@@ -4,17 +4,17 @@ name: Continuous delivery and deploy into AWS Cloud provider
 # ou de forma manual
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
     paths:
     - "app/**"
   pull_request:
-    branches: [main]
+    branches: [main, develop]
     paths:
     - "app/**"
   workflow_dispatch:
 
 jobs:
-  build-test:
+  continuous-delivery:
     runs-on: ubuntu-latest
 
     steps:
