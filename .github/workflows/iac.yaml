@@ -1,0 +1,17 @@
+name: Automated Provisioning into AWS
+
+#  Será executada as atividade abaixo de forma manual
+on:
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.7.5"
