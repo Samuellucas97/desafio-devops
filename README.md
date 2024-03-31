@@ -29,7 +29,7 @@ Visite a pasta [local_infra](./local_infra/) para saber mais sobre a instalaçã
 
 TODO
 
-![cloud infrastructure design](./assets/cloud-environment_version_1.png)
+![cloud infrastructure design](./assets/cloud-environment_version_2.png)
 
 Visite a pasta [cloud_infra](./cloud_infra/) para saber mais sobre a instalação e execução.
 

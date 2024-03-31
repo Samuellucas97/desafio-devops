@@ -14,3 +14,7 @@ __pycache__/
 
 .vagrant
 *.log
+.terraform
+.terraform.*
+*.tfstate.*
+tfplan

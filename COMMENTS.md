@@ -135,3 +135,17 @@ Dia 29/Março (manhã/tarde)
 
 Dia 29 (noite)
 Finalização da conversão do script shell para script ansible.
+
+Dia 30 (tarde)
+  - finalizei o script para instalação do microk8s e kong ingress controller
+    - Não gostei porque não deixei maleavel a ponto de poder usar outros kubernetes clouds já que estou usando o comando microk8s.kubectl e microk8s.helm. É uma divida técnica deixar parametrizavel.
+    - Fui olhar agora a aws, estou vendo o custo pela calculadora. Eu gostaria de ter dois ambientes na nuvem. Estou pensando em rodar por uma semana apenas
+      - O ambiente mais simples vai requerer apenas uma instancia do EC2. Por voltga de 20 dolares mensais, que dá 5 dolares (30 reais, aproximademente). Já O ambiente mais complexo iria usar o EKS (AWS Kubernetes service) ou ECS (AWS Container Service), Amazon API Gateway
+      - Para evitar problemas de gasto, vou colocar uns alertas de 25, 50 e 75 porcento. Não quero gastar mais do que 15 dolares (80 reais, aproximademente).
+      
+    - estou criando um group IAM que vai ter as permissões apenas para criação do 
+    - quanto a vpc, vou criar apenas uma subnet tera um cidr com mascara de apenas /24 (256 endereços). Como é apenas para teste, não há a necessidade de usar tanto endereços.
+    - finalizei o script terraform e testei. Testei criando uma vm de 1 Gb de RAM, Ubuntu.
+    - Preciso colocar o terraform num workflow do github actions
+    - preciso também fazer rodar o terraform com o ansible, para que seja instalado.
+    - e pensar em monitoramento
