@@ -1,8 +1,10 @@
 # Desafio DevOps
 
-[![Automated Provisioning into AWS](https://github.com/Samuellucas97/desafio-devops/actions/workflows/iac.yaml/badge.svg)](https://github.com/Samuellucas97/desafio-devops/actions/workflows/iac.yaml)
-
 [![Continuous delivery and deploy into AWS Cloud provider](https://github.com/Samuellucas97/desafio-devops/actions/workflows/cd_app.yaml/badge.svg)](https://github.com/Samuellucas97/desafio-devops/actions/workflows/cd_app.yaml)
+
+[![Provisioning of the AWS infraestructure](https://github.com/Samuellucas97/desafio-devops/actions/workflows/iac_provisioning.yaml/badge.svg)](https://github.com/Samuellucas97/desafio-devops/actions/workflows/iac_provisioning.yaml)
+
+[![Deprovisioning of the AWS infraestructure](https://github.com/Samuellucas97/desafio-devops/actions/workflows/iac_deprovisioning.yaml/badge.svg)](https://github.com/Samuellucas97/desafio-devops/actions/workflows/iac_deprovisioning.yaml)
 
 Este projeto tem como intuito a implantação automatizada de uma aplicação Flask: API de comentários. Com isso serão praticados os seguintes conhecimentos:
 

@@ -1,4 +1,4 @@
-name: Manual Deprovisioning into AWS
+name: Deprovisioning of the AWS infraestructure
 
 #  Será executada as atividade abaixo de forma manual
 on:
