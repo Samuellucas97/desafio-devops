@@ -121,66 +121,100 @@ PLAY [localhost] ***************************************************************
 TASK [Gathering Facts] *********************************************************
 ok: [localhost]
 
-TASK [Update package cache] ****************************************************
+TASK [INSTALL THE COMMON REQUIREMENTS] *****************************************
+
+TASK [common : Update package cache] *******************************************
 changed: [localhost]
 
-TASK [Upgrade all packages] ****************************************************
-changed: [localhost]
+TASK [common : Upgrade all packages] *******************************************
+ok: [localhost]
 
-TASK [Install prerequisites for MicroK8s] **************************************
+TASK [common : Install prerequisites for MicroK8s installation] ****************
 ok: [localhost] => (item=curl)
 ok: [localhost] => (item=iptables)
 ok: [localhost] => (item=snapd)
 
-TASK [Install MicroK8s] ********************************************************
+TASK [CREATE AND CONFIGURE A MICROK8S CLUSTER] *********************************
+
+TASK [microk8s : Install MicroK8s using snap] **********************************
 changed: [localhost]
 
-TASK [Check MicroK8s status] ***************************************************
+TASK [microk8s : Check MicroK8s status] ****************************************
 changed: [localhost]
 
-TASK [Create .kube directory] **************************************************
-changed: [localhost]
-
-TASK [Checking if the group exists] ********************************************
+TASK [microk8s : Create .kube directory] ***************************************
 ok: [localhost]
 
-TASK [Add Ansible user to microk8s group] **************************************
-changed: [localhost]
-
-TASK [Change ownership to Ansible user (and group)] ****************************
+TASK [microk8s : Checking if the group exists] *********************************
 ok: [localhost]
 
-TASK [Add kubectl and helm aliases] ********************************************
-changed: [localhost] => (item={'alias': 'kubectl', 'command': 'microk8s kubectl'})
-changed: [localhost] => (item={'alias': 'helm', 'command': 'microk8s helm'})
+TASK [microk8s : Add Ansible user to microk8s group] ***************************
+ok: [localhost]
 
-TASK [Enable add-ons] **********************************************************
+TASK [microk8s : Change ownership to Ansible user (and group)] *****************
+ok: [localhost]
+
+TASK [microk8s : Add kubectl and helm aliases] *********************************
+ok: [localhost] => (item={'alias': 'kubectl', 'command': 'microk8s kubectl'})
+ok: [localhost] => (item={'alias': 'helm', 'command': 'microk8s helm'})
+
+TASK [microk8s : Enable add-ons] ***********************************************
 changed: [localhost]
 
-TASK [Instal Metallb] **********************************************************
+TASK [microk8s : Instal Metallb] ***********************************************
 changed: [localhost]
 
-TASK [Install Kubernetes Gateway API] ******************************************
+TASK [ENABLE KUBERNETES CLUSTER MONITORING] ************************************
+
+TASK [monitoring : Enable MicroK8s monitoring add-ons (metrics-server, observability, and dashboard)] ***
 changed: [localhost]
 
-TASK [Install Kubernetes Gateway CRD] ******************************************
+TASK [INSTALL THE KONG INTO THE MICROK8S] **************************************
+
+TASK [kong : Creates a directory for the Gateway CRD configuration file] *******
+ok: [localhost]
+
+TASK [kong : Copy the Gateway CRD configuration file] **************************
+ok: [localhost]
+
+TASK [kong : Install Kubernetes Gateway API] ***********************************
 changed: [localhost]
 
-TASK [Add Kong helm repo] ******************************************************
+TASK [kong : Install Kubernetes Gateway CRD] ***********************************
 changed: [localhost]
 
-TASK [Update Helm repo] ********************************************************
+TASK [kong : Add Kong helm repo] ***********************************************
 changed: [localhost]
 
-TASK [Check if the Kong namespace exists] **************************************
-fatal: [localhost]: FAILED! => {"changed": true, "cmd": ["microk8s.kubectl", "get", "namespace", "kong"], "delta": "0:00:00.164182", "end": "2024-04-01 01:40:04.254308", "msg": "non-zero return code", "rc": 1, "start": "2024-04-01 01:40:04.090126", "stderr": "Error from server (NotFound): namespaces \"kong\" not found", "stderr_lines": ["Error from server (NotFound): namespaces \"kong\" not found"], "stdout": "", "stdout_lines": []}
+TASK [kong : Update Helm repo] *************************************************
+changed: [localhost]
+
+TASK [kong : Check if the Kong namespace exists] *******************************
+changed: [localhost]
+
+TASK [kong : Install KIC Helm] *************************************************
+skipping: [localhost]
+
+TASK [INSTALL ARGO CD INTO THE MICROK8S] ***************************************
+
+TASK [argocd : Creates a directory for the Apllication.yaml Kubernetes configuration file] ***
+ok: [localhost]
+
+TASK [argocd : Copy the Gateway CRD configuration file] ************************
+ok: [localhost]
+
+TASK [argocd : Create namespace argocd] ****************************************
+fatal: [localhost]: FAILED! => {"changed": true, "cmd": ["microk8s.kubectl", "create", "namespace", "argocd"], "delta": "0:00:02.898286", "end": "2024-04-01 08:38:06.886221", "msg": "non-zero return code", "rc": 1, "start": "2024-04-01 08:38:03.987935", "stderr": "Error from server (AlreadyExists): namespaces \"argocd\" already exists", "stderr_lines": ["Error from server (AlreadyExists): namespaces \"argocd\" already exists"], "stdout": "", "stdout_lines": []}
 ...ignoring
 
-TASK [Install KIC Helm] ********************************************************
+TASK [argocd : Deploy Argo CD into MicroK8s] ***********************************
+changed: [localhost]
+
+TASK [argocd : Deploy Argo CD Flask Application into the MicroK8s] *************
 changed: [localhost]
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=19   changed=15   unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+localhost                  : ok=26   changed=14   unreachable=0    failed=0    skipped=1    rescued=0    ignored=1  
 
 
 vagrant status
