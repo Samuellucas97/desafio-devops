@@ -37,10 +37,12 @@ A infraestrutura na AWS é composta por uma:
 
 * Virtual Private Cloud (**VPC**)
 * Subnet
-* Route Table
-* Internet Gateway
-* Security Group
 * Elastic Compute Cloud (**EC2**)
+* Simple Storage Service (**S3**)  
+* DynamoDB
+* Security Group
+* Internet Gateway
+* Route Table
 
 
 O provisionamento é feito de forma automatizado via script Terraform.
