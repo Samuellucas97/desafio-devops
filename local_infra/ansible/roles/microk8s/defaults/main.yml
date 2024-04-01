@@ -1,0 +1,8 @@
+---
+ansible_user_name: vagrant
+ansible_user_group_name: vagrant
+microk8s_version: 1.27
+bash_aliases:
+- {alias: "kubectl", command: "microk8s kubectl"}
+- {alias: 'helm', command: 'microk8s helm'}
+metallb_ip_range: 192.168.56.12-192.168.56.20

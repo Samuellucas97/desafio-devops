@@ -1,0 +1,2 @@
+- name: Enable MicroK8s monitoring add-ons (metrics-server, observability, and dashboard)
+  command: microk8s enable metrics-server observability dashboard

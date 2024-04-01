@@ -1,0 +1,24 @@
+- hosts: localhost
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: INSTALL THE COMMON REQUIREMENTS
+      include_role:
+        name: common
+
+    - name: CREATE AND CONFIGURE A MICROK8S CLUSTER
+      include_role:
+        name: microk8s  
+
+    - name: ENABLE KUBERNETES CLUSTER MONITORING
+      ansible.builtin.include_role:
+        name: monitoring
+
+    - name: INSTALL THE KONG INTO THE MICROK8S
+      include_role:
+        name: kong
+        
+    - name: INSTALL ARGO CD INTO THE MICROK8S
+      include_role:
+        name: argocd 

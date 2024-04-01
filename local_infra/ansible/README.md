@@ -37,7 +37,7 @@ ansible [core 2.13.13]
 Execute o seguinte comando:
 
 ```bash
-$ ansible-playbook  -i ./inventory/localhost/hosts.yaml ./playbooks/main.yaml 
+$ ansible-playbook  -i ./inventory/localhost/hosts.yaml ./playbooks.yaml 
 
 PLAY [localhost] ***************************************************************
 

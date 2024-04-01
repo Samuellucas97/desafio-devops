@@ -1,0 +1,22 @@
+- name: Creates a directory for the Apllication.yaml Kubernetes configuration file
+  file:
+    path: /home/vagrant/argocd
+    state: directory
+
+- name: Copy the Gateway CRD configuration file
+  copy:
+    src: application.yaml
+    dest: /home/vagrant/argocd/application.yaml
+
+- name: Create namespace argocd
+  command: microk8s.kubectl create namespace argocd
+  become: true
+  ignore_errors: true
+
+- name: Deploy Argo CD into MicroK8s
+  command: microk8s.kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  become: true
+
+- name: Deploy Argo CD Flask Application into the MicroK8s
+  command: microk8s.kubectl apply -f /home/vagrant/argocd/application.yaml
+  become: true

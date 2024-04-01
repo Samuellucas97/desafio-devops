@@ -1,0 +1,20 @@
+---
+- name: Update package cache
+  apt:
+    update_cache: yes
+  become: true
+
+- name: Upgrade all packages
+  apt:
+    upgrade: safe
+  become: true
+
+- name: Install prerequisites for MicroK8s installation
+  apt:
+    name: "{{ item }}"
+    state: present
+  become: true
+  loop:
+    - curl
+    - iptables
+    - snapd
