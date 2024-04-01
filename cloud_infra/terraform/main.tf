@@ -8,6 +8,7 @@ terraform {
     backend "s3" {
       bucket = "desafiodevopsterraforms3backendbucket"
       key = "terraform.tfstate"
+      region = "us-east-2"
       dynamodb_table = "desafio-devops-terraform-lock"
     }
 
