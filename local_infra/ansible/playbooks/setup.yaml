@@ -30,58 +30,51 @@
         - iptables
         - snapd
 
-    - name: Install MicroK8s
-      command: snap install microk8s --classic --channel={{microk8s_version}}
-      become: true
-    
-    - name: Check MicroK8s status
-      command: microk8s status --wait-ready
-      become: true
+    - name: Create and Configure a MicroK8s cluster
+      block: 
+        - name: Install MicroK8s using snap
+          command: snap install microk8s --classic --channel={{microk8s_version}}
+        
+        - name: Check MicroK8s status
+          command: microk8s status --wait-ready
 
-    - name: Create .kube directory
-      file:
-        path: "{{ ansible_env.HOME }}/.kube"
-        state: directory
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-      become: true
+        - name: Create .kube directory
+          file:
+            path: "{{ ansible_env.HOME }}/.kube"
+            state: directory
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
 
-    - name: Checking if the group exists
-      group: 
-        name: "{{ ansible_user_group_name }}"
-        state: present 
-      become: true
+        - name: Checking if the group exists
+          group: 
+            name: "{{ ansible_user_group_name }}"
+            state: present 
 
-    - name: Add Ansible user to microk8s group
-      user:
-        name: "{{ ansible_user_name }}"
-        groups: microk8s
-        append: true
-      become: true
-    
-    - name: Change ownership to Ansible user (and group)
-      file:
-        path: "{{ ansible_env.HOME }}/.kube"
-        state: directory
-        owner: "{{ ansible_user_name }}"
-        group: "{{ ansible_user_group_name }}"
-      become: true
-  
-    - name: Add kubectl and helm aliases
-      lineinfile:
-        dest: "{{ ansible_env.HOME }}/.bash_aliases"
-        line: 'alias {{ item.alias }}="{{ item.command }}"'
-        create: yes
-      become: true
-      with_items: "{{ bash_aliases }}"        
-    
-    - name: Enable add-ons
-      command: microk8s enable dns storage rbac 
-      become: true
-
+        - name: Add Ansible user to microk8s group
+          user:
+            name: "{{ ansible_user_name }}"
+            groups: microk8s
+            append: true
+        
+        - name: Change ownership to Ansible user (and group)
+          file:
+            path: "{{ ansible_env.HOME }}/.kube"
+            state: directory
+            owner: "{{ ansible_user_name }}"
+            group: "{{ ansible_user_group_name }}"
       
-    - name: Instal Metallb
-      command: microk8s enable metallb:{{ metallb_ip_range }}
+        - name: Add kubectl and helm aliases
+          lineinfile:
+            dest: "{{ ansible_env.HOME }}/.bash_aliases"
+            line: 'alias {{ item.alias }}="{{ item.command }}"'
+            create: yes
+          with_items: "{{ bash_aliases }}"        
+        
+        - name: Enable add-ons
+          command: microk8s enable dns storage rbac 
+          
+        - name: Instal Metallb
+          command: microk8s enable metallb:{{ metallb_ip_range }}
       become: true
   
     - name: Install Kong Ingress Controller (KIC)
@@ -108,5 +101,17 @@
           when: namespace_kong_output.rc != 0
 
       become: true
+
+    - name: Install Argo CD 
+      block: 
+        - name: Create namespace argocd
+          command: microk8s.kubectl create namespace argocd
+
+        - name: Deploy Argo CD into MicroK8s
+          command: microk8s.kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+      become: true
+
+         
 
             

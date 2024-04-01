@@ -42,7 +42,23 @@ Para criação da VM e obtenção de acesso, use o comando abaixo:
 
 ```bash
 $ make
-LDING THE VIRTUAL MACHINE **********************************
+
+******************** DESTROYING THE VIRTUAL MACHINE **********************************
+vagrant destroy -f
+==> default: Destroying VM and associated drives...
+
+vagrant status
+Current machine states:
+
+default                   not created (virtualbox)
+
+The environment has not yet been created. Run `vagrant up` to
+create the environment. If a machine is not created, only the
+default provider will be shown. So if a provider is not listed,
+then the machine is not created for that environment.
+
+
+******************** BUILDING THE VIRTUAL MACHINE **********************************
 vagrant provision
 ==> default: VM not created. Moving on...
 
@@ -66,7 +82,7 @@ Bringing machine 'default' up with 'virtualbox' provider...
 ==> default: A newer version of the box 'ubuntu/focal64' for provider 'virtualbox' is
 ==> default: available! You currently have version '20240306.0.0'. The latest is version
 ==> default: '20240306.0.1'. Run `vagrant box update` to update.
-==> default: Setting the name of the VM: local_infra_default_1711832843225_38816
+==> default: Setting the name of the VM: local_infra_default_1711935269628_61595
 ==> default: Clearing any previously set network interfaces...
 ==> default: Preparing network interfaces based on configuration...
     default: Adapter 1: nat
@@ -79,8 +95,6 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: SSH address: 127.0.0.1:2222
     default: SSH username: vagrant
     default: SSH auth method: private key
-    default: Warning: Connection reset. Retrying...
-    default: Warning: Remote connection disconnect. Retrying...
     default: 
     default: Vagrant insecure key detected. Vagrant will automatically replace
     default: this with a newly generated keypair for better security.
@@ -159,7 +173,7 @@ TASK [Update Helm repo] ********************************************************
 changed: [localhost]
 
 TASK [Check if the Kong namespace exists] **************************************
-fatal: [localhost]: FAILED! => {"changed": true, "cmd": ["microk8s.kubectl", "get", "namespace", "kong"], "delta": "0:00:00.147899", "end": "2024-03-30 21:20:52.224031", "msg": "non-zero return code", "rc": 1, "start": "2024-03-30 21:20:52.076132", "stderr": "Error from server (NotFound): namespaces \"kong\" not found", "stderr_lines": ["Error from server (NotFound): namespaces \"kong\" not found"], "stdout": "", "stdout_lines": []}
+fatal: [localhost]: FAILED! => {"changed": true, "cmd": ["microk8s.kubectl", "get", "namespace", "kong"], "delta": "0:00:00.164182", "end": "2024-04-01 01:40:04.254308", "msg": "non-zero return code", "rc": 1, "start": "2024-04-01 01:40:04.090126", "stderr": "Error from server (NotFound): namespaces \"kong\" not found", "stderr_lines": ["Error from server (NotFound): namespaces \"kong\" not found"], "stdout": "", "stdout_lines": []}
 ...ignoring
 
 TASK [Install KIC Helm] ********************************************************
@@ -186,12 +200,7 @@ Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-173-generic x86_64)
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/pro
 
-  System information as of Sat Mar 30 21:20:59 UTC 2024
-
-  System load:  0.91              Processes:               174
-  Usage of /:   8.9% of 38.70GB   Users logged in:         0
-  Memory usage: 31%               IPv4 address for enp0s3: 10.0.2.15
-  Swap usage:   0%                IPv4 address for enp0s8: 192.168.56.10
+ System information disabled due to load higher than 2.0
 
 
 Expanded Security Maintenance for Applications is not enabled.
@@ -206,7 +215,7 @@ Run 'do-release-upgrade' to upgrade to it.
 
 
 *** System restart required ***
-Last login: Sat Mar 30 21:20:52 2024 from 192.168.56.1
+Last login: Mon Apr  1 01:40:04 2024 from 192.168.56.1
 ```
 
 Para parar a VM, execute:
