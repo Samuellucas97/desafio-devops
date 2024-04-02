@@ -2,41 +2,41 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: flask-app
-  name: flask-app
+    app: {{ .Values.appName }}
+  name: {{ .Values.ReleaseName }}-flask-app
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: flask-app
+      app: {{ .Values.appName }}
   template:
     metadata:
       labels:
-        app: flask-app
+        app: {{ .Values.appName }}
     spec:
       containers:
-      - name: {{ .Chart.name }}
+      - name: {{ .Values.appName }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-        - containerPort: 8000
+        - containerPort: {{ .Values.containerPort }}
         readinessProbe:
           httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 75
-          timeoutSeconds: 10
-          periodSeconds: 60
+            path: {{ .Values.healthCheckPath }}
+            port: {{ .Values.containerPort }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
         livenessProbe:
           httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 75
-          timeoutSeconds: 10
-          periodSeconds: 60
+            path: {{ .Values.healthCheckPath }}
+            port: {{ .Values.containerPort }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
         startupProbe:
           httpGet:
-            path: /health
-            port: 8000
-          failureThreshold: 30
-          periodSeconds: 10
+            path: {{ .Values.healthCheckPath }}
+            port: {{ .Values.containerPort }}
+          failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+          periodSeconds: {{ .Values.startupProbe.periodSeconds }}

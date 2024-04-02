@@ -6,12 +6,12 @@ Este diretório contém informações relacionadas ao Kong API Gateway.
 
 ```bash
 $ microk8s enable dns storage rbac metallb
-$ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
-$ kubectl apply -f /home/vagrant/kong/gateway-api-crd.yaml
+$ microk8s.kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+$ microk8s.kubectl apply -f /home/vagrant/kong/gateway-api-crd.yaml
 $ helm repo add kong https://charts.konghq.com
 $ helm repo update
 $ helm install kong kong/ingress -n kong --create-namespace 
-$ export PROXY_IP=$(kubectl get svc --namespace kong kong-gateway-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+$ export PROXY_IP=$(microk8s.kubectl get svc --namespace kong kong-gateway-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 $ echo $PROXY_IP
 $ curl -i $PROXY_IP
 HTTP/1.1 404 Not Found
@@ -29,7 +29,7 @@ Server: kong/3.0.0
 Execute o seguinte comando para descobrir as portas dos serviços relacionados:
 
 ```bash
-$ kubectl get service -n kong-api-gateway 
+$ microk8s.kubectl get service -n kong-api-gateway 
 NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
 kong-kong-validation-webhook   ClusterIP      10.152.183.159   <none>        443/TCP                         6h39m
 kong-kong-manager              NodePort       10.152.183.94    <none>        8002:31553/TCP,8445:31273/TCP   6h39m

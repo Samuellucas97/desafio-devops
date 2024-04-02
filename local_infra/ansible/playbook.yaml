@@ -18,7 +18,7 @@
     - name: INSTALL THE KONG INTO THE MICROK8S
       include_role:
         name: kong
-        
+
     - name: INSTALL ARGO CD INTO THE MICROK8S
       include_role:
-        name: argocd 
+        name: argocd         

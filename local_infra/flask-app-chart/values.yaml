@@ -1,4 +1,19 @@
+appName: flask-app
+ReleaseName: 1
 replicaCount: 1
+containerPort: 8000
+healthCheckPath: /health
+readinessProbe:
+  initialDelaySeconds: 75
+  timeoutSeconds: 10
+  periodSeconds: 60
+livenessProbe:
+  initialDelaySeconds: 75
+  timeoutSeconds: 10
+  periodSeconds: 60
+startupProbe:
+  failureThreshold: 30
+  periodSeconds: 10
 image:
   repository: samuel1797/desafio-devops
   tag: 1.0

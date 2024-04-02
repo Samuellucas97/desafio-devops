@@ -102,8 +102,8 @@ resource "aws_instance" "desafio_devops_ec2_instance" {
         inline = [ 
             "sudo apt update -y",
             "sudo apt upgrade -y",
-            "sudo apt install -y software-properties-common",  # Install required dependencies
-            "sudo apt-add-repository --yes --update ppa:ansible/ansible",  # Add Ansible repository (optional)
+            "sudo apt install -y software-properties-common", 
+            "sudo apt-add-repository --yes --update ppa:ansible/ansible",  
             "sudo apt install python3",
             "sudo apt install -y ansible"
          ]
