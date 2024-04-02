@@ -90,6 +90,41 @@ resource "aws_instance" "desafio_devops_ec2_instance" {
     tags = {
         Name = "DesafioDevOpsEC2Instance"
     }
+
+    connection {
+        host = self.public_ip
+        type = "ssh"
+        user = "ubuntu"
+        private_key = file("~/.ssh/id_rsa")
+    }
+
+    provisioner "remote-exec" {
+        inline = [ 
+            "sudo apt update -y",
+            "sudo apt upgrade -y",
+            "sudo apt install -y software-properties-common",  # Install required dependencies
+            "sudo apt-add-repository --yes --update ppa:ansible/ansible",  # Add Ansible repository (optional)
+            "sudo apt install python3",
+            "sudo apt install -y ansible"
+         ]
+    }
+
+    provisioner "file" {
+        source = "../../local_infra/ansible"
+        destination = "/tmp/ansible"
+
+        connection {
+            host = self.public_ip
+            type = "ssh"
+            user = "ubuntu"
+            private_key = file("~/.ssh/id_rsa")
+        }    
+    }
+
+    provisioner "remote-exec" {
+        inline = [ 
+            "cd /tmp/ansible && ansible-playbook playbook.yaml -i ./inventory/localhost/hosts.yaml"
+         ]
+    }
+    
 }
-
-

@@ -265,3 +265,11 @@ Por fim, deve-se executar o seguinte comando para destruir a VM:
 $ vagrant destroy -f
 ==> default: Destroying VM and associated drives...
 ```
+
+<!-- export NODE_PORT="$(microk8s kubectl get services/flask-app-service --namespace app -o go-template='{{(index .spec.ports 0).nodePort}}')"
+echo "NODE_PORT=${NODE_PORT}"
+curl -sv localhost:${NODE_PORT}/api/comment/list/1
+
+# microk8s kubectl --namespace kube-system patch svc kubernetes-dashboard -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32000, "port": 443, "protocol": "TCP", "targetPort": 8443}]}}'
+# microk8s kubectl --namespace observability patch svc kube-prom-stack-kube-prome-prometheus -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32001, "port": 9090, "protocol": "TCP", "targetPort": 9090}]}}'
+# microk8s kubectl --namespace observability patch svc kube-prom-stack-grafana -p '{"spec": {"type": "NodePort", "ports": [{"nodePort": 32002, "port": 80, "protocol": "TCP", "targetPort": 3000}]}}' -->

@@ -83,7 +83,7 @@ argocd-redis                              ClusterIP      10.152.183.238   <none>
 argocd-repo-server                        ClusterIP      10.152.183.32    <none>          8081/TCP,8084/TCP            84s
 argocd-server-metrics                     ClusterIP      10.152.183.84    <none>          8083/TCP                     84s
 argocd-server                             LoadBalancer   10.152.183.233   192.168.56.13   80:32332/TCP,443:32567/TCP   84s
-$ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+$ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 DnLRQdbhyYGDUIJw
 ```
 
