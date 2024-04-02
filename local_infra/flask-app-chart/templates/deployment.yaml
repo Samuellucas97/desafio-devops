@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Values.appName }}
-  name: {{ .Values.ReleaseName }}-flask-app
+  name: {{ .Values.appName }}-{{ .Values.ReleaseName }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

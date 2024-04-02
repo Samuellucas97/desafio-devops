@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: local_infra/k8s
+    path: local_infra/flask-app-chart
     repoURL: https://github.com/Samuellucas97/desafio-devops
     targetRevision: HEAD
   syncPolicy:
