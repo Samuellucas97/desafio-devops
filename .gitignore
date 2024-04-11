@@ -4,6 +4,8 @@
 # PyCharm
 .idea/
 
+poetry.lock
+
 .env
 
 # Python specific

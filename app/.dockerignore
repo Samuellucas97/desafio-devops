@@ -1,3 +1,5 @@
 *
-!api.py
-!requirements.txt
+!api
+!config.py
+!main.py
+!pyproject.toml

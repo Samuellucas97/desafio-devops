@@ -47,21 +47,6 @@ clean:
 	@echo
 
 
-
-clean:
-	@echo
-	@echo "******************** KILLING CONTAINER **********************************"
-	docker rm -f ${CONTAINER_NAME}
-	@echo
-	docker ps
-	@echo
-	@echo
-	@echo "******************** REMOVING DOCKER IMAGE **********************************"
-	docker image rm -f ${FLASK_APP_DOCKER}:${DOCKER_IMAGE_VERSION}
-	@echo
-	docker image ls
-	@echo
-
 publish:
 	@echo
 	@echo "******************** BUILDING & TAGGING DOCKER IMAGE **********************************"
