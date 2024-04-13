@@ -42,13 +42,13 @@ def api_comment_new():
 @app.route('/api/comment/list/<content_id>')
 def api_comment_list(content_id):
     content_id = '{}'.format(content_id)
-    app.logger.info('Trying to retrieve comment')
+    logger.info('Trying to retrieve comment')
     
 
     if content_id in comments:
         return jsonify(comments[content_id])
     else:
-        app.logger.error('Comment id %s does not exist', content_id)
+        logger.error('Comment id %s does not exist', content_id)
         message = 'content_id {} not found'.format(content_id)
         response = {
                 'status': HTTPStatus.NOT_FOUND,

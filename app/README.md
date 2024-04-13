@@ -149,7 +149,8 @@ Existem outros comandos disponíveis no arquivo `Makefile`: `make buid`, `make r
 Caso deseje executar localmente, execute os seguintes comandos em máquina Linux:
 
 ```bash
-$ pip install -r requirements.txt
+$ pip install poetry==1.1.12
+$ poetry install --no-dev --no-interaction --no-ansi
 $ sudo apt install gunicorn
 $ gunicorn --log-level debug api:app
 ```

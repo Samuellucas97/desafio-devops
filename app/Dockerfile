@@ -16,12 +16,9 @@ RUN poetry config virtualenvs.create false \
 
 FROM  python:3.9-alpine AS production
 
-# COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
 COPY --from=builder /opt/app/.venv /opt/app/.venv
 
 ENV PATH="/opt/app/.venv/bin:$PATH"
-
-
 
 WORKDIR /opt/app
 
