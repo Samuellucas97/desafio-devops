@@ -2,6 +2,8 @@
 
 Trata-se de uma aplicação Flask - API REST.  Através dela os internautas enviam comentários em texto de uma máteria e acompanham o que outras pessoas estão falando sobre o assunto em destaque. O funcionamento básico da API consiste em uma rota para inserção dos comentários e uma rota para listagem.
 
+É utilizado o Poetry para gerenciamento de ambiente virtual (virtualenv) e gerenciamento de pacotes. A lista de pacotes está disponível em `pyproject`. Caso deseje adicionar um novo pacotes execute `poetry add <nome do pacote>`.
+
 ## Requisitos
 
 - Docker (_versão 25.0.4_)
@@ -155,4 +157,5 @@ $ sudo apt install gunicorn
 $ gunicorn --log-level debug api:app
 ```
 
-A aplicação está disponível em [http://localhost:8000](http://localhost:8000).
+A aplicação estará disponível em [http://localhost:8000](http://localhost:8000).
+

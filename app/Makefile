@@ -25,7 +25,7 @@ run: build
 	@echo
 	@echo "******************** RUNNING DOCKER INSTANCE **********************************"
 	docker build -t ${FLASK_APP_DOCKER}:${DOCKER_IMAGE_VERSION} .
-	docker run --detach --rm -p ${DOCKER_HOST_PORT}:${DOCKER_INTERNAL_PORT} --name ${CONTAINER_NAME} ${FLASK_APP_DOCKER}:${DOCKER_IMAGE_VERSION}
+	docker run --net=host --detach --rm -p ${DOCKER_HOST_PORT}:${DOCKER_INTERNAL_PORT} --name ${CONTAINER_NAME} ${FLASK_APP_DOCKER}:${DOCKER_IMAGE_VERSION}
 	@echo
 	@echo
 	docker ps
