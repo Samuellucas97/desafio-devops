@@ -20,73 +20,89 @@ $ make
 
 ******************** KILLING CONTAINER **********************************
 docker rm -f flask_app
-Error response from daemon: No such container: flask_app
+flask_app
 
 docker ps
-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+CONTAINER ID   IMAGE                              COMMAND                  CREATED        STATUS        PORTS     NAMES
 
 
 ******************** REMOVING DOCKER IMAGE **********************************
 docker image rm -f app:1.0
 Untagged: app:1.0
-Deleted: sha256:b9b683671dda7241f6de452dc526653cdfae0d4c1d1cdc58afea0d32443b6146
+Deleted: sha256:8d8e2f40b280037b55395c746fe184f01d2149cae6009d878fd26ee16a9bdaa7
 
 docker image ls
-REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+REPOSITORY                                      TAG       IMAGE ID       CREATED       SIZE
 
 
 ******************** BUILDING & TAGGING DOCKER IMAGE **********************************
 docker build -t app:1.0 .
-[+] Building 1.3s (10/10) FINISHED                                                                                    docker:default
- => [internal] load build definition from Dockerfile                                                                            0.0s
- => => transferring dockerfile: 274B                                                                                            0.0s
- => [internal] load metadata for docker.io/library/python:3.7.4-alpine                                                          1.3s
- => [internal] load .dockerignore                                                                                               0.0s
- => => transferring context: 68B                                                                                                0.0s
- => [1/5] FROM docker.io/library/python:3.7.4-alpine@sha256:6673d8ce9610d166b6d7d6abda21537ddcf30e6bc8c20ca86f17f1085e20ac95    0.0s
- => [internal] load build context                                                                                               0.0s
- => => transferring context: 63B                                                                                                0.0s
- => CACHED [2/5] WORKDIR /opt/app                                                                                               0.0s
- => CACHED [3/5] COPY requirements.txt .                                                                                        0.0s
- => CACHED [4/5] RUN pip install --no-cache-dir -r requirements.txt                                                             0.0s
- => CACHED [5/5] COPY ./api.py .                                                                                                0.0s
- => exporting to image                                                                                                          0.0s
- => => exporting layers                                                                                                         0.0s
- => => writing image sha256:e593f2bb2d51d07894e58bb35f1188ef17ea6769e615ba010ac701f2101f4c2b                                    0.0s
- => => naming to docker.io/library/app:1.0                                                                                      0.0s
+[+] Building 1.3s (18/18) FINISHED                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                0.0s
+ => => transferring dockerfile: 815B                                                                0.0s
+ => [internal] load metadata for docker.io/library/python:3.9-alpine                                1.2s
+ => [auth] library/python:pull token for registry-1.docker.io                                       0.0s
+ => [internal] load .dockerignore                                                                   0.0s
+ => => transferring context: 82B                                                                    0.0s
+ => [builder 1/6] FROM docker.io/library/python:3.9-alpine@sha256:99161d2323b4130fed2d849dc8ba3527  0.0s
+ => [internal] load build context                                                                   0.0s
+ => => transferring context: 4.37kB                                                                 0.0s
+ => CACHED [builder 2/6] WORKDIR /opt/app                                                           0.0s
+ => CACHED [builder 3/6] RUN  pip install --upgrade pip && apk add -u build-base gcc musl-dev libf  0.0s
+ => CACHED [builder 4/6] COPY pyproject.toml ./                                                     0.0s
+ => CACHED [builder 5/6] RUN pip install poetry==1.1.12                                             0.0s
+ => CACHED [builder 6/6] RUN poetry config virtualenvs.create false     && poetry install --no-dev  0.0s
+ => CACHED [production 2/7] COPY --from=builder /opt/app/.venv /opt/app/.venv                       0.0s
+ => CACHED [production 3/7] RUN apk --no-cache add musl-dev libgcc                                  0.0s
+ => CACHED [production 4/7] WORKDIR /opt/app                                                        0.0s
+ => CACHED [production 5/7] COPY api ./api                                                          0.0s
+ => [production 6/7] COPY main.py .                                                                 0.0s
+ => [production 7/7] COPY config.py .                                                               0.0s
+ => exporting to image                                                                              0.0s
+ => => exporting layers                                                                             0.0s
+ => => writing image sha256:010a65eaa2f0a65cead73142b30a4d69e6d0e6f75f5e99fb93f0a7c7c1c266e0        0.0s
+ => => naming to docker.io/library/app:1.0                                                          0.0s
 
 
 docker image ls
-REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
-app          1.0       e593f2bb2d51   13 minutes ago   109MB
+REPOSITORY                                      TAG       IMAGE ID       CREATED                  SIZE
+app                                             1.0       010a65eaa2f0   Less than a second ago   89MB
 
 
 ******************** RUNNING DOCKER INSTANCE **********************************
 docker build -t app:1.0 .
-[+] Building 0.3s (10/10) FINISHED                                                                                    docker:default
- => [internal] load build definition from Dockerfile                                                                            0.0s
- => => transferring dockerfile: 274B                                                                                            0.0s
- => [internal] load metadata for docker.io/library/python:3.7.4-alpine                                                          0.3s
- => [internal] load .dockerignore                                                                                               0.0s
- => => transferring context: 68B                                                                                                0.0s
- => [1/5] FROM docker.io/library/python:3.7.4-alpine@sha256:6673d8ce9610d166b6d7d6abda21537ddcf30e6bc8c20ca86f17f1085e20ac95    0.0s
- => [internal] load build context                                                                                               0.0s
- => => transferring context: 63B                                                                                                0.0s
- => CACHED [2/5] WORKDIR /opt/app                                                                                               0.0s
- => CACHED [3/5] COPY requirements.txt .                                                                                        0.0s
- => CACHED [4/5] RUN pip install --no-cache-dir -r requirements.txt                                                             0.0s
- => CACHED [5/5] COPY ./api.py .                                                                                                0.0s
- => exporting to image                                                                                                          0.0s
- => => exporting layers                                                                                                         0.0s
- => => writing image sha256:e593f2bb2d51d07894e58bb35f1188ef17ea6769e615ba010ac701f2101f4c2b                                    0.0s
- => => naming to docker.io/library/app:1.0                                                                                      0.0s
-docker run --detach --rm -p 8000:8000 --name flask_app app:1.0
-b7b2b5177439806c472a7eed33175f100ca4045cc1dd44aeb7977b3e5a7c6640
+[+] Building 0.3s (17/17) FINISHED                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                0.0s
+ => => transferring dockerfile: 815B                                                                0.0s
+ => [internal] load metadata for docker.io/library/python:3.9-alpine                                0.2s
+ => [internal] load .dockerignore                                                                   0.0s
+ => => transferring context: 82B                                                                    0.0s
+ => [builder 1/6] FROM docker.io/library/python:3.9-alpine@sha256:99161d2323b4130fed2d849dc8ba3527  0.0s
+ => [internal] load build context                                                                   0.0s
+ => => transferring context: 179B                                                                   0.0s
+ => CACHED [builder 2/6] WORKDIR /opt/app                                                           0.0s
+ => CACHED [builder 3/6] RUN  pip install --upgrade pip && apk add -u build-base gcc musl-dev libf  0.0s
+ => CACHED [builder 4/6] COPY pyproject.toml ./                                                     0.0s
+ => CACHED [builder 5/6] RUN pip install poetry==1.1.12                                             0.0s
+ => CACHED [builder 6/6] RUN poetry config virtualenvs.create false     && poetry install --no-dev  0.0s
+ => CACHED [production 2/7] COPY --from=builder /opt/app/.venv /opt/app/.venv                       0.0s
+ => CACHED [production 3/7] RUN apk --no-cache add musl-dev libgcc                                  0.0s
+ => CACHED [production 4/7] WORKDIR /opt/app                                                        0.0s
+ => CACHED [production 5/7] COPY api ./api                                                          0.0s
+ => CACHED [production 6/7] COPY main.py .                                                          0.0s
+ => CACHED [production 7/7] COPY config.py .                                                        0.0s
+ => exporting to image                                                                              0.0s
+ => => exporting layers                                                                             0.0s
+ => => writing image sha256:010a65eaa2f0a65cead73142b30a4d69e6d0e6f75f5e99fb93f0a7c7c1c266e0        0.0s
+ => => naming to docker.io/library/app:1.0                                                          0.0s
+docker run --net=host --detach --rm -p 8000:8000 --name flask_app app:1.0
+WARNING: Published ports are discarded when using host network mode
+fe68f002cdeaf6415b439952c122b5b2bd26a97aca2fc83c146d46cb931dda66
 
 
 docker ps
-CONTAINER ID   IMAGE     COMMAND                  CREATED        STATUS                  PORTS                                       NAMES
-b7b2b5177439   app:1.0   "gunicorn -b 0.0.0.0…"   1 second ago   Up Less than a second   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp   flask_app
+CONTAINER ID   IMAGE                              COMMAND                  CREATED        STATUS                  PORTS     NAMES
+fe68f002cdea   app:1.0                            "gunicorn -b 0.0.0.0…"   1 second ago   Up Less than a second             flask_app
 ```
 
 A aplicação por meio do container `flask_ap` estará disponível em [http://localhost:8000](http://localhost:8000). Voce pode verificar se está tudo ok fazendo a seguinte requisição:
